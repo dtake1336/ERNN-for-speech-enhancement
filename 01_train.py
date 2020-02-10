@@ -40,11 +40,11 @@ DNNmode = 'ERNN_K1'
 
 lossMode = 'timeDomMAE'
 
-#stateSize = 512
-stateSize = 256
+stateSize = 512
+#stateSize = 256
 
-#hiddenSize = 512
-hiddenSize = 256
+hiddenSize = 512
+#hiddenSize = 256
 #hiddenSize = 128
 #hiddenSize = 64
 #hiddenSize = 32
