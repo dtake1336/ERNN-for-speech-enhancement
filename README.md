@@ -24,6 +24,6 @@ A set of Python codes for training and test are available.
 Note that paths in each code need to be changed for your environment.
 
 ### Reference
-\[1] D. Takeuchi, K. Yatabe, Y. Koizumi, Y. Oikawa, and N. Harada, “Real-time speech enhancement using equilibriated RNN,” in 2020 IEEE Int. Conf. Acoust. Speech Signal Process. (ICASSP), 2020.
+\[1] D. Takeuchi, K. Yatabe, Y. Koizumi, Y. Oikawa, and N. Harada, “Real-time speech enhancement using equilibriated RNN,” in 2020 IEEE Int. Conf. Acoust. Speech Signal Process. (ICASSP), 2020. (accepted)
 
 \[2] C. Valentini-Botinho, X. Wang, S. Takaki, and J. Yamagishi, “Investigating RNN-based speech enhancement methods for noise-robust Text-to-Speech.,” in 9th ISCA Speech Synth. Workshop, 2016, pp. 146–152.
