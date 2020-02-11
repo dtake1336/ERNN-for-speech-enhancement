@@ -22,5 +22,4 @@ A set of Python codes for training and test are available.
 <dd> Run "01_train.py" to train a model </dd> 
 <dd> Run "02_test.py" to evaluate a model </dd> 
 </dl>
-
-
+Note that paths in each code need to be changed for your environment.
