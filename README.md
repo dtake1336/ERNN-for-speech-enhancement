@@ -1,5 +1,7 @@
-# equibriatedRNN
-いんとろだくしょん
+# equilibriated RNN for speech enhancement
+In this repository, real-time speech enhancement method using the equilibriated recurrent neural network (ERNN) for the T-F mask estimator is impremented using Chainer.
+In our paper, VoiceBank-DEMAND dataset (available on [here](http://dx.doi.org/10.7488/ds/1356)) is used.
+
 
 ### Dependencies
 We have tested these codes on follwoing environment:
