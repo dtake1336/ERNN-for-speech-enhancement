@@ -2,7 +2,7 @@
 In this repository, real-time speech enhancement method using the equilibriated recurrent neural network (ERNN) for the T-F mask estimator \[1] is impremented using Chainer.
 
 Our paper can be found [here]() (in preparation).
-If you use codes in this repository, please cite the above paper.
+If you use codes in this repository, please cite this paper.
 
 In our paper, VoiceBank-DEMAND dataset \[2] (available [here](http://dx.doi.org/10.7488/ds/1356)) is used.
 
