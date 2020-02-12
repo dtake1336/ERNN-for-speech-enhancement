@@ -3,7 +3,7 @@ import numpy as np
 import scipy as scipy
 from scipy.io import wavfile
 from chainer import cuda
-import glob # ファイル一覧取得
+import glob
 import sys
 import math
 cuda.check_cuda_available()
