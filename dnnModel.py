@@ -4,7 +4,6 @@ from chainer import cuda, Variable, variable
 from chainer import Chain
 import chainer.functions as F
 import chainer.links as L
-from instance_normalization import InstanceNormalization
 import copy
 cuda.check_cuda_available()
 xp = cuda.cupy 
