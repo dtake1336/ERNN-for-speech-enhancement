@@ -77,14 +77,13 @@ class ERNN_K1(Chain):
              
     def __call__(self, x0):
         Bsize,Fsize,Tsize = x0.shape
-        hp = Variable( xp.zeros((Bsize,self.stateSize)).astype(np.float32) )
+        h0 = Variable( xp.zeros((Bsize,self.stateSize)).astype(np.float32) )
         y = xp.zeros((Bsize,Fsize,0)).astype(np.float32)
         for ii in range(Tsize):
-            h0 = Variable( xp.zeros((Bsize,self.stateSize)).astype(np.float32) )
             wx = self.l1_in(x0[:,:,ii])
             
             #K=1
-            uh0 = self.l1_hid(hp+h0)
+            uh0 = self.l1_hid(h0+h0)
             F1h_hat = F.relu(uh0 + wx)
             Fnh_hat = F.relu(self.l3(F.relu(self.l2(F1h_hat)))) # kokoni DNN wo ippai irerareru
             h1 = h0 + self.eta1 * (Fnh_hat - (h0+h0))
@@ -92,7 +91,7 @@ class ERNN_K1(Chain):
             y1 = F.sigmoid(self.l_out(h1))
             y1 = F.expand_dims(y1, axis=2)
             y = F.concat( (y,y1), axis=2)
-            hp = copy.deepcopy(h1)
+            h0 = copy.deepcopy(h1)
         return y
     
 ################################################################################
@@ -116,26 +115,25 @@ class ERNN_K3(Chain):
              
     def __call__(self, x0):
         Bsize,Fsize,Tsize = x0.shape
-        hp = Variable( xp.zeros((Bsize,self.stateSize)).astype(np.float32) )
+        h0 = Variable( xp.zeros((Bsize,self.stateSize)).astype(np.float32) )
         y = xp.zeros((Bsize,Fsize,0)).astype(np.float32)
         for ii in range(Tsize):
-            h0 = Variable( xp.zeros((Bsize,self.stateSize)).astype(np.float32) )
             wx = self.l1_in(x0[:,:,ii])
             
             #K=1
-            uh0 = self.l1_hid(h0+hp)
+            uh0 = self.l1_hid(h0+h0)
             F1h_hat = F.relu(uh0 + wx)
             Fnh_hat = F.relu(self.l3(F.relu(self.l2(F1h_hat)))) # kokoni DNN wo ippai irerareru
             h1 = h0 + self.eta1 * (Fnh_hat - (h0+h0))
             
             #K=2
-            uh1 = self.l1_hid(h1+hp)
+            uh1 = self.l1_hid(h1+h0)
             F1h_hat = F.relu(uh1 + wx)
             Fnh_hat = F.relu(self.l3(F.relu(self.l2(F1h_hat)))) # kokoni DNN wo ippai irerareru
             h2 = h1 + self.eta2 * (Fnh_hat - (h1+h0))
             
             #K=3
-            uh2 = self.l1_hid(h2+hp)
+            uh2 = self.l1_hid(h2+h0)
             F1h_hat = F.relu(uh2 + wx)
             Fnh_hat = F.relu(self.l3(F.relu(self.l2(F1h_hat)))) # kokoni DNN wo ippai irerareru
             h3 = h2 + self.eta3 * (Fnh_hat - (h2+h0))
@@ -143,7 +141,7 @@ class ERNN_K3(Chain):
             y1 = F.sigmoid(self.l_out(h3))
             y1 = F.expand_dims(y1, axis=2)
             y = F.concat( (y,y1), axis=2)
-            hp = copy.deepcopy(h3)
+            h0 = copy.deepcopy(h3)
         return y
 ################################################################################
 class ERNN_K5(Chain):
@@ -168,38 +166,37 @@ class ERNN_K5(Chain):
              
     def __call__(self, x0):
         Bsize,Fsize,Tsize = x0.shape
-        hp = Variable( xp.zeros((Bsize,self.stateSize)).astype(np.float32) )
+        h0 = Variable( xp.zeros((Bsize,self.stateSize)).astype(np.float32) )
         y = xp.zeros((Bsize,Fsize,0)).astype(np.float32)
         for ii in range(Tsize):
-            h0 = Variable( xp.zeros((Bsize,self.stateSize)).astype(np.float32) )
             wx = self.l1_in(x0[:,:,ii])
             
             #K=1
-            uh0 = self.l1_hid(h0+hp)
+            uh0 = self.l1_hid(h0+h0)
             F1h_hat = F.relu(uh0 + wx)
             Fnh_hat = F.relu(self.l3(F.relu(self.l2(F1h_hat)))) # kokoni DNN wo ippai irerareru
             h1 = h0 + self.eta1 * (Fnh_hat - (h0+h0))
             
             #K=2
-            uh1 = self.l1_hid(h1+hp)
+            uh1 = self.l1_hid(h1+h0)
             F1h_hat = F.relu(uh1 + wx)
             Fnh_hat = F.relu(self.l3(F.relu(self.l2(F1h_hat)))) # kokoni DNN wo ippai irerareru
             h2 = h1 + self.eta2 * (Fnh_hat - (h1+h0))
             
             #K=3
-            uh2 = self.l1_hid(h2+hp)
+            uh2 = self.l1_hid(h2+h0)
             F1h_hat = F.relu(uh2 + wx)
             Fnh_hat = F.relu(self.l3(F.relu(self.l2(F1h_hat)))) # kokoni DNN wo ippai irerareru
             h3 = h2 + self.eta3 * (Fnh_hat - (h2+h0))
             
             #K=4
-            uh3 = self.l1_hid(h3+hp)
+            uh3 = self.l1_hid(h3+h0)
             F1h_hat = F.relu(uh3 + wx)
             Fnh_hat = F.relu(self.l3(F.relu(self.l2(F1h_hat)))) # kokoni DNN wo ippai irerareru
             h4 = h3 + self.eta4 * (Fnh_hat - (h3+h0))
             
             #K=5
-            uh4 = self.l1_hid(h4+hp)
+            uh4 = self.l1_hid(h4+h0)
             F1h_hat = F.relu(uh4 + wx)
             Fnh_hat = F.relu(self.l3(F.relu(self.l2(F1h_hat)))) # kokoni DNN wo ippai irerareru
             h5 = h4 + self.eta5 * (Fnh_hat - (h4+h0))
@@ -207,7 +204,7 @@ class ERNN_K5(Chain):
             y1 = F.sigmoid(self.l_out(h5))
             y1 = F.expand_dims(y1, axis=2)
             y = F.concat( (y,y1), axis=2)
-            hp = copy.deepcopy(h3)
+            h0 = copy.deepcopy(h3)
         return y   
     
 
