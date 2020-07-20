@@ -165,10 +165,16 @@ with cuda.Device( DEVICE_INFO ):
                 sys.stdout.write('\repoch: '+str(epoch)+' TrnSet: '+str(jj+1)+'/'+str(batchNum) )
                 sys.stdout.flush()
                 
-                s = xp.reshape(cuda.to_gpu(np.array([])).astype(np.float32), (0,batchTimeFrame*shiftLen) )
-                x = xp.reshape(cuda.to_gpu(np.array([])).astype(np.float32), (0,batchTimeFrame*shiftLen) )
-                S = xp.reshape(cuda.to_gpu(np.array([])).astype(np.float32), (0,chNum,batchTimeFrame) )
-                X = xp.reshape(cuda.to_gpu(np.array([])).astype(np.float32), (0,chNum,batchTimeFrame) )
+#                 s = xp.reshape(cuda.to_gpu(np.array([])).astype(np.float32), (0,batchTimeFrame*shiftLen) )
+#                 x = xp.reshape(cuda.to_gpu(np.array([])).astype(np.float32), (0,batchTimeFrame*shiftLen) )
+#                 S = xp.reshape(cuda.to_gpu(np.array([])).astype(np.float32), (0,chNum,batchTimeFrame) )
+#                 X = xp.reshape(cuda.to_gpu(np.array([])).astype(np.float32), (0,chNum,batchTimeFrame) )
+                
+                s = xp.zeros((batchSize, batchTimeFrame*shiftLen)).astype(np.float32)
+                x = xp.zeros((batchSize, batchTimeFrame*shiftLen)).astype(np.float32)
+                S = xp.zeros((batchSize, chNum, batchTimeFrame)).astype(np.float32)
+                X = xp.zeros((batchSize, chNum, batchTimeFrame)).astype(np.float32)
+                
                 for kk in range( batchSize ):
                     sx = S_set[ perm2[kk+jj*batchSize] ]
                     st = np.random.randint(len(sx[0])-batchTimeFrame*shiftLen)
@@ -178,15 +184,20 @@ with cuda.Device( DEVICE_INFO ):
                     Stmp = dgt.dgt(stmp)
                     Xtmp = dgt.dgt(xtmp)
                     
-                    stmp =  xp.reshape(stmp, (1, batchTimeFrame*shiftLen) )
-                    xtmp =  xp.reshape(xtmp, (1, batchTimeFrame*shiftLen) )
-                    Stmp =  xp.reshape(Stmp, (1, chNum, batchTimeFrame) )
-                    Xtmp =  xp.reshape(Xtmp, (1, chNum, batchTimeFrame) )
+#                     stmp =  xp.reshape(stmp, (1, batchTimeFrame*shiftLen) )
+#                     xtmp =  xp.reshape(xtmp, (1, batchTimeFrame*shiftLen) )
+#                     Stmp =  xp.reshape(Stmp, (1, chNum, batchTimeFrame) )
+#                     Xtmp =  xp.reshape(Xtmp, (1, chNum, batchTimeFrame) )
                     
-                    s = xp.concatenate( (s,stmp), axis=0)
-                    x = xp.concatenate( (x,xtmp), axis=0)
-                    S = xp.concatenate( (S,Stmp), axis=0)
-                    X = xp.concatenate( (X,Xtmp), axis=0)
+#                     s = xp.concatenate( (s,stmp), axis=0)
+#                     x = xp.concatenate( (x,xtmp), axis=0)
+#                     S = xp.concatenate( (S,Stmp), axis=0)
+#                     X = xp.concatenate( (X,Xtmp), axis=0)
+                    
+                    s[kk,:len(stmp)] = stmp
+                    x[kk,:len(xtmp)] = xtmp
+                    S[kk,:,:len(Stmp[0])] = Stmp
+                    X[kk,:,:len(Xtmp[0])] = Xtmp
                 
                 fet = xp.log(xp.abs(X).astype(np.float32) + Log_reg )
                 G = dnnEst(fet)
